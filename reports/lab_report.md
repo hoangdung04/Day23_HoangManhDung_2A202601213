@@ -103,7 +103,7 @@ Lược đồ `AgentState` được thiết kế chặt chẽ, phân định rõ
 | `evaluation_result`| `str` | Ghi đè (Overwrite) | Đánh giá (`success`/`retry`) |
 | `pending_question` | `str` | Ghi đè (Overwrite) | Câu hỏi làm rõ khi thiếu info |
 | `proposed_action` | `str` | Ghi đè (Overwrite) | Hành động đề xuất trước duyệt |
-| `approval` | `bool \| None` | Ghi đè (Overwrite) | Quyết định duyệt trong HITL |
+| `approval` | `dict[str, Any] \| None` | Ghi đè (Overwrite) | Metadata phê duyệt HITL |
 | `final_answer` | `str` | Ghi đè (Overwrite) | Câu trả lời cuối cùng |
 
 ---
@@ -117,8 +117,7 @@ Lược đồ `AgentState` được thiết kế chặt chẽ, phân định rõ
 - **Số bước duyệt trung bình (Average Nodes Visited)**: `6.43` nodes
 - **Tổng số lần thử lại (Total Retries)**: `3`
 - **Tổng số lần can thiệp phê duyệt (Total Interrupts)**: `2`
-- **Khôi phục trạng thái từ Checkpoint (Resume Success)**: `True`
-
+- **Khôi phục trạng thái từ Checkpoint (Resume Success)**: `False`
 ### Bảng chi tiết từng kịch bản kiểm thử:
 
 | Scenario ID | Expected Route | Actual Route | Terminal Outcome | Retries | Approval | Kết Quả |

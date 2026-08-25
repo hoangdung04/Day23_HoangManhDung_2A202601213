@@ -39,11 +39,7 @@ class ApprovalDecision(BaseModel):
 
 
 class AgentState(TypedDict, total=False):
-    """LangGraph state.
-
-    TODO(student): decide which fields should be append-only and which should be overwritten.
-    The current annotations give a safe starting point for auditability.
-    """
+    """Serializable LangGraph state for the agent workflow."""
 
     thread_id: str
     scenario_id: str

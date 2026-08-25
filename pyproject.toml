@@ -46,6 +46,8 @@ ignore = ["ANN401"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["ANN", "E501"]
+"tests/test_graph_smoke.py" = ["E402"]
+"tests/test_routing.py" = ["F401"]
 
 [tool.pytest.ini_options]
 minversion = "8.0"

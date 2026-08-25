@@ -45,7 +45,8 @@ def get_llm(model: str | None = None, temperature: float = 0.0) -> Any:
             from langchain_openai import ChatOpenAI
         except ImportError as exc:
             raise RuntimeError("Install: pip install langchain-openai") from exc
-        return ChatOpenAI(
+        chat_openai_cls: Any = ChatOpenAI
+        return chat_openai_cls(
             model=model or os.getenv("LLM_MODEL", "gpt-4o-mini"),
             temperature=temperature,
         )
