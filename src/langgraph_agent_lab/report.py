@@ -183,10 +183,14 @@ Cơ chế Checkpointing bền vững được kiểm chứng qua thư viện `la
 
 ## 7. Phần Mở Rộng (Extension Work)
 
-1. **SQLite Checkpointing**: Hỗ trợ lưu trữ bền vững với cơ chế recovery và query lịch sử trạng thái qua `build_checkpointer("sqlite", ...)`.
-2. **Mermaid Graph Diagram Tự Động**: Sinh đồ thị trực quan chuẩn xác trực tiếp từ `graph.get_graph().draw_mermaid()` lưu tại `reports/graph.mmd`.
-3. **Structured Output & Deterministic Validation**: Kết hợp Pydantic model (`ClassificationResult`, `EvaluationResult`) cho LLM nodes cùng validation chống lỗi logic.
-4. **Observable Terminal Outcomes**: Mở rộng metric schema với `terminal_outcome` (`answered`, `clarified`, `dead_letter`) loại bỏ hoàn toàn false-positive.
+1. **SQLite Checkpointing**: Hỗ trợ lưu trữ bền vững với cơ chế recovery và query lịch sử
+   trạng thái qua `build_checkpointer("sqlite", ...)`.
+2. **Mermaid Graph Diagram Tự Động**: Sinh đồ thị trực quan chuẩn xác trực tiếp từ
+   `graph.get_graph().draw_mermaid()` lưu tại `reports/graph.mmd`.
+3. **Structured Output & Deterministic Validation**: Kết hợp Pydantic model (`ClassificationResult`,
+   `EvaluationResult`) cho LLM nodes cùng validation chống lỗi logic.
+4. **Observable Terminal Outcomes**: Mở rộng metric schema với `terminal_outcome`
+   (`answered`, `clarified`, `dead_letter`) loại bỏ hoàn toàn false-positive.
 
 ---
 
@@ -194,7 +198,8 @@ Cơ chế Checkpointing bền vững được kiểm chứng qua thư viện `la
 
 1. **Mở rộng Persistence phân tán**: Tích hợp `AsyncPostgresSaver` cho môi trường multi-tenant.
 2. **Hỗ trợ Streaming Token**: Triển khai Server-Sent Events (SSE) cho `answer_node`.
-3. **Cơ chế Time-Travel & Override**: Cho phép quản trị viên xem lại và quay ngược trạng thái về bất kỳ checkpoint nào.
+3. **Cơ chế Time-Travel & Override**: Cho phép quản trị viên xem lại và quay ngược
+   trạng thái về bất kỳ checkpoint nào.
 """
 
 

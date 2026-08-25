@@ -1,18 +1,11 @@
-# Báo Cáo Thực Hành LangGraph Agent Lab (Day 23)
+# Day 23 Lab Report
 
-## 1. Tóm Tắt Tổng Quan (Executive Summary)
+## 1. Team / student
 
-Dự án triển khai một hệ thống điều phối Agent thông minh (Agentic Orchestrator) xử lý
-yêu cầu hỗ trợ khách hàng (Support Ticket System) xây dựng trên nền tảng **LangGraph**
-kết hợp mô hình ngôn ngữ lớn **Google Gemini** (`ChatGoogleGenerativeAI`).
-
-Hệ thống tích hợp đầy đủ các mẫu kiến trúc agentic hiện đại:
-- **Phân loại ý định qua LLM (Structured Intent Classification)**: Tự động trích xuất định tuyến.
-- **Điều hướng có điều kiện (Conditional Routing)**: Phân luồng linh hoạt các nhánh nghiệp vụ.
-- **Vòng lặp thử lại có giới hạn (Bounded Retry Loop)**: Tự phục hồi với chốt chặn `dead_letter`.
-- **Con người can thiệp (Human-in-the-Loop - HITL)**: Cổng phê duyệt cho thao tác nguy hiểm.
-- **Lưu trữ checkpoint bền vững (SQLite Persistence)**: `SqliteSaver` với chế độ WAL.
-- **Quan sát kết quả đầu ra (Outcome Observability)**: Đánh giá qua `terminal_outcome`.
+- Name: Hoang Manh Dung
+- Student ID: 2A202601213
+- Repo: Day23_HoangManhDung_2A202601213
+- Date: 2026-08-25
 
 ---
 
@@ -169,8 +162,17 @@ Cơ chế Checkpointing bền vững được kiểm chứng qua thư viện `la
 
 ---
 
-## 7. Kế Hoạch Cải Tiến & Mở Rộng (Improvement Plan)
+## 7. Phần Mở Rộng (Extension Work)
+
+1. **SQLite Checkpointing**: Hỗ trợ lưu trữ bền vững với cơ chế recovery và query lịch sử trạng thái qua `build_checkpointer("sqlite", ...)`.
+2. **Mermaid Graph Diagram Tự Động**: Sinh đồ thị trực quan chuẩn xác trực tiếp từ `graph.get_graph().draw_mermaid()` lưu tại `reports/graph.mmd`.
+3. **Structured Output & Deterministic Validation**: Kết hợp Pydantic model (`ClassificationResult`, `EvaluationResult`) cho LLM nodes cùng validation chống lỗi logic.
+4. **Observable Terminal Outcomes**: Mở rộng metric schema với `terminal_outcome` (`answered`, `clarified`, `dead_letter`) loại bỏ hoàn toàn false-positive.
+
+---
+
+## 8. Kế Hoạch Cải Tiến (Improvement Plan)
 
 1. **Mở rộng Persistence phân tán**: Tích hợp `AsyncPostgresSaver` cho môi trường multi-tenant.
 2. **Hỗ trợ Streaming Token**: Triển khai Server-Sent Events (SSE) cho `answer_node`.
-3. **Cơ chế Time-Travel**: Cho phép quản trị viên quay ngược trạng thái về bất kỳ checkpoint nào.
+3. **Cơ chế Time-Travel & Override**: Cho phép quản trị viên xem lại và quay ngược trạng thái về bất kỳ checkpoint nào.
