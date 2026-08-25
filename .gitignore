@@ -25,6 +25,10 @@ env/
 checkpoints.db
 checkpoints.db-wal
 checkpoints.db-shm
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+outputs/*.sqlite*
 
 # Testing
 .pytest_cache/

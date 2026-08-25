@@ -1,29 +1,4 @@
-"""Trình tạo báo cáo đánh giá toàn diện cho LangGraph Agent Lab (Day 23)."""
-
-from __future__ import annotations
-
-from pathlib import Path
-
-from .metrics import MetricsReport
-
-
-def render_report(metrics: MetricsReport) -> str:
-    """Tạo báo cáo chi tiết chuẩn markdown hoàn chỉnh từ MetricsReport.
-
-    Bao gồm đầy đủ 5 phần trọng tâm + Persistence Evidence + Phân tích lỗi thực tế.
-    """
-    scenario_rows = []
-    for item in metrics.scenario_metrics:
-        success_str = "Thành công (True)" if item.success else "Thất bại (False)"
-        approval_str = "Có" if item.approval_observed else "Không"
-        row = (
-            f"| `{item.scenario_id}` | `{item.expected_route}` | `{item.actual_route}` | "
-            f"`{item.terminal_outcome}` | {item.retry_count} | {approval_str} | **{success_str}** |"
-        )
-        scenario_rows.append(row)
-    table_content = "\n".join(scenario_rows)
-
-    return f"""# Báo Cáo Thực Hành LangGraph Agent Lab (Day 23)
+# Báo Cáo Thực Hành LangGraph Agent Lab (Day 23)
 
 ## 1. Tóm Tắt Tổng Quan (Executive Summary)
 
@@ -137,18 +112,24 @@ Lược đồ `AgentState` được thiết kế chặt chẽ, phân định rõ
 
 ### Chỉ số tổng hợp (Summary Metrics)
 
-- **Tổng số kịch bản kiểm thử (Total Scenarios)**: `{metrics.total_scenarios}`
-- **Tỷ lệ thành công toàn diện (Success Rate)**: **`{metrics.success_rate:.2%}`**
-- **Số bước duyệt trung bình (Average Nodes Visited)**: `{metrics.avg_nodes_visited:.2f}` nodes
-- **Tổng số lần thử lại (Total Retries)**: `{metrics.total_retries}`
-- **Tổng số lần can thiệp phê duyệt (Total Interrupts)**: `{metrics.total_interrupts}`
+- **Tổng số kịch bản kiểm thử (Total Scenarios)**: `7`
+- **Tỷ lệ thành công toàn diện (Success Rate)**: **`100.00%`**
+- **Số bước duyệt trung bình (Average Nodes Visited)**: `6.43` nodes
+- **Tổng số lần thử lại (Total Retries)**: `3`
+- **Tổng số lần can thiệp phê duyệt (Total Interrupts)**: `2`
 - **Khôi phục trạng thái từ Checkpoint (Resume Success)**: `True`
 
 ### Bảng chi tiết từng kịch bản kiểm thử:
 
 | Scenario ID | Expected Route | Actual Route | Terminal Outcome | Retries | Approval | Kết Quả |
 |:---|:---|:---|:---|:---:|:---:|:---:|
-{table_content}
+| `S01_simple` | `simple` | `simple` | `answered` | 0 | Không | **Thành công (True)** |
+| `S02_tool` | `tool` | `tool` | `answered` | 0 | Không | **Thành công (True)** |
+| `S03_missing` | `missing_info` | `missing_info` | `clarified` | 0 | Không | **Thành công (True)** |
+| `S04_risky` | `risky` | `risky` | `answered` | 0 | Có | **Thành công (True)** |
+| `S05_error` | `error` | `error` | `answered` | 2 | Không | **Thành công (True)** |
+| `S06_delete` | `risky` | `risky` | `answered` | 0 | Có | **Thành công (True)** |
+| `S07_dead_letter` | `error` | `error` | `dead_letter` | 1 | Không | **Thành công (True)** |
 
 ---
 
@@ -194,11 +175,3 @@ Cơ chế Checkpointing bền vững được kiểm chứng qua thư viện `la
 1. **Mở rộng Persistence phân tán**: Tích hợp `AsyncPostgresSaver` cho môi trường multi-tenant.
 2. **Hỗ trợ Streaming Token**: Triển khai Server-Sent Events (SSE) cho `answer_node`.
 3. **Cơ chế Time-Travel**: Cho phép quản trị viên quay ngược trạng thái về bất kỳ checkpoint nào.
-"""
-
-
-def write_report(metrics: MetricsReport, output_path: str | Path) -> None:
-    """Ghi nội dung báo cáo ra tệp tin markdown với mã hóa UTF-8."""
-    path = Path(output_path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(render_report(metrics), encoding="utf-8")
